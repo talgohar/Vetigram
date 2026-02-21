@@ -36,11 +36,11 @@ const options = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "Web Dev 2025 REST API",
+      title: "Web Dev 2026 REST API",
       version: "1.0.0",
       description: "REST server including authentication using JWT",
     },
-    servers: [{ url: `http://localhost:3030` },{ url: `http://10.10.246.141` }, { url: `https://10.10.246.141` }, { url: `https://node141.cs.colman.ac.il` }],
+    servers: [{ url: `http://localhost:4000` },{ url: `http://10.10.246.141` }, { url: `https://10.10.246.141` }, { url: `https://node141.cs.colman.ac.il` }],
     components: {
       securitySchemes: {
         bearerAuth: {
@@ -65,7 +65,7 @@ app.use("/public", express.static("public"));
 app.use(express.static("front"));
 const frontPath = path.join(__dirname, "..", "front");
 
-app.get("*", (req, res) => {
+app.get(/.*/, (req, res) => {
   res.sendFile(path.join(frontPath, "index.html"));
 });
 
