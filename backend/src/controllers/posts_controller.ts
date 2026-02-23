@@ -10,7 +10,7 @@ class PostsController extends BaseController<IPost> {
   }
 
   async create(req: Request, res: Response) {
-    const userId = req.params.userId;
+    const userId = req.params.userId as string;
     const post = {
       ...req.body,
       owner: new mongoose.Types.ObjectId(userId)

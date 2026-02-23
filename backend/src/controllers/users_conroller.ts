@@ -36,7 +36,7 @@ class UsersController extends BaseController<IUser> {
   }
 
   async updateUser(req: Request, res: Response): Promise<void> {
-    const userId = req.params.userId;
+    const userId = req.params.userId as string;
     const username = req.body.username;
     if (!mongoose.Types.ObjectId.isValid(userId)) {
       res.status(400).json({ message: "Invalid userId" });
@@ -68,7 +68,7 @@ class UsersController extends BaseController<IUser> {
       return;
     }
 
-    const userId = req.params.userId;
+    const userId = req.params.userId as string;
     const base = `${process.env.DOMAIN_BASE}:${process.env.PORT}/public/`;
 
     if (!mongoose.Types.ObjectId.isValid(userId)) {
