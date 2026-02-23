@@ -1,0 +1,71 @@
+body, html {
+  width: 100%;
+
+  justify-content: center;
+  background-color: #f9f9f9 !important;
+}
+
+.modal-open {
+  overflow: hidden;
+}
+
+.modal-open::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8); /* Darker background */
+  z-index: 1040; /* Ensure it is behind the modal but above other content */
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+.home-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.home-header {
+  text-align: center;
+}
+
+.home-logo {
+  font-size: 40px;
+}
+
+.home-title {
+  font-weight: 800;
+  font-size: 28px;
+  color: #198754;
+}
+
+.profile-page {
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #f5fdf8, #ffffff);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-content {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.profile-content .card {
+  margin-bottom: 20px;
+  border-radius: 16px;
+}
+
+
+
+
+
+

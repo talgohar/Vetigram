@@ -1,0 +1,14 @@
+[
+    {
+      "comment": "This is a test comment",
+      "owner": "TestOwner1",
+      "postId": "TestPostId1",
+      "isOwnerVet": false
+    },
+    {
+      "comment": "This is another test comment",
+      "owner": "TestOwner2",
+      "postId": "TestPostId2",
+      "isOwnerVet": true
+    }
+  ]

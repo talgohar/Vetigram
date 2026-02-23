@@ -1,0 +1,30 @@
+.modal-content {
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.app-brand {
+  font-weight: 800;
+  font-size: 24px;
+  color: #198754; 
+  line-height: 1;
+}
+
+.app-subtitle {
+  font-size: 13px;
+  color: #6c757d;
+}
+
+.login-description {
+  font-size: 14px;
+  color: #6c757d;
+  margin-bottom: 10px;
+}
+
+.modal-header {
+  border-bottom: none;
+}
+
+.modal-footer {
+  border-top: none;
+}
