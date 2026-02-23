@@ -99,7 +99,7 @@ const uploadProfile = multer({ storage: profileStorage });
  *               properties:
  *                 url:
  *                   type: string
- *                   example: "http://localhost:5000/public/posts/user123/1709678500000.png"
+ *                   example: "http://localhost:3030/public/posts/user123/1709678500000.png"
  *       400:
  *         description: Bad request, no file uploaded
  *       500:
@@ -139,7 +139,7 @@ router.post("/posts", authMiddleware, uploadPost.single("file"), postsController
  *               properties:
  *                 url:
  *                   type: string
- *                   example: "http://localhost:5000/profile/posts/user123/1709678500000.png"
+ *                   example: "http://localhost:3030/profile/posts/user123/1709678500000.png"
  *       400:
  *         description: Bad request, no file uploaded
  *       500:

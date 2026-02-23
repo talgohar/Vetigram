@@ -1,7 +1,7 @@
 {
-  "name": "medigram",
+  "name": "vetigram-backend",
   "version": "1.0.0",
-  "description": "MediGram is a social platform where users share medical images like MRI scans and receive instant feedback from both the community and healthcare professionals.",
+  "description": "Vetigram is a social platform where users share veterinary images like MRI scans and receive instant feedback from both the community and veterinary professionals.",
   "main": "app.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
