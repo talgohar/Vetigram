@@ -73,15 +73,7 @@ const App: React.FC = () => {
         />
       ))}
       <button
-        className="btn btn-light rounded-circle p-3 shadow-lg d-flex align-items-center justify-content-center fs-3 fw-bold border border-dark position-fixed"
-        style={{
-          width: "3vw",
-          height: "6vh",
-          zIndex: 1000,
-          bottom: "10%",
-          right: "10%",
-          fontWeight: "bold",
-        }}
+        className="btn btn-light rounded-circle shadow-lg border border-dark position-fixed add-post-btn"
         ref={tooltipRef}
         data-bs-toggle="tooltip"
         data-bs-placement="top"
@@ -89,7 +81,7 @@ const App: React.FC = () => {
         data-bs-title="Add New Post"
         onClick={() => setShowModal(true)}
       >
-        +
+      +
       </button>
       <AddPostDialog
         show={showModal}

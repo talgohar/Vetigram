@@ -1,0 +1,17 @@
+.post-card {
+  max-width: 50vw;
+}
+
+.post-image {
+  height: 50vh;
+  width: 26vw;
+  object-fit: cover;
+}
+
+.post-action-icon {
+  cursor: pointer;
+}
+
+.post-delete-icon {
+  cursor: pointer;
+}

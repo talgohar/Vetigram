@@ -6,6 +6,7 @@ import useUser from "../hooks/useUser";
 import useLike from "../hooks/useLike";
 import CommentsDialog from "./CommentsDialog";
 import { User } from "../services/userService";
+import "./Post.css";
 
 interface PostProps {
   userId: string;
@@ -44,7 +45,7 @@ const Post: React.FC<PostProps> = ({ owner, userId, caption, postId, imageName, 
   }, [postId, imageName, owner, owner?.imageName]);
 
   return (
-    <div className="card my-3" style={{ maxWidth: "50vw" }}>
+    <div className="card my-3 post-card">
       {/* Post Header */}
       <div className="card-header d-flex align-items-center">
         <img
@@ -58,14 +59,13 @@ const Post: React.FC<PostProps> = ({ owner, userId, caption, postId, imageName, 
         {owner && owner.isVet && <FaUserMd className="ms-2" />}
         {ableToDeletePost && deletePost && <FaTrash
           size={24}
-          className="ms-auto text-danger"
-          onClick={() => deletePost(postId)} // Add delete button
-          style={{ cursor: "pointer" }}
+          className="ms-auto text-danger post-delete-icon"
+          onClick={() => deletePost(postId)}
         />}
       </div>
 
       {/* Post Image */}
-      <img src={postImg} className="card-img-top" style={{height: '50vh',width: '26vw' }} alt="Post" />
+      <img src={postImg} className="card-img-top post-image" alt="Post" />
 
       {/* Post Actions */}
       <div className="card-body">
@@ -74,11 +74,11 @@ const Post: React.FC<PostProps> = ({ owner, userId, caption, postId, imageName, 
             {/* Toggle Like Icon */}
             <span className="m-3">{likesCount}</span>
             {liked ? (
-              <FaHeart size={24} className="me-2 text-danger" onClick={toggleLike} style={{ cursor: "pointer" }} />
+              <FaHeart size={24} className="me-2 text-danger post-action-icon" onClick={toggleLike} />
             ) : (
-              <FaRegHeart size={24} className="me-2" onClick={toggleLike} style={{ cursor: "pointer" }} />
+              <FaRegHeart size={24} className="me-2 post-action-icon" onClick={toggleLike} />
             )}
-            <FaRegComment onClick={() => setShowComments(true)} size={24} className="me-2" />
+            <FaRegComment onClick={() => setShowComments(true)} size={24} className="me-2 post-action-icon" />
           </div>
         </div>
 

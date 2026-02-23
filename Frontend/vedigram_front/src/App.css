@@ -75,8 +75,16 @@ body, html {
   border-radius: 16px;
 }
 
-
-
-
-
-
+.add-post-btn {
+  width: 60px;
+  height: 60px;
+  padding: 0 !important;
+  font-size: 30px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  bottom: 10%;
+  right: 10%;
+  line-height: 0; 
+}

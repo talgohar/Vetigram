@@ -1,0 +1,43 @@
+.image-dropdown-container {
+  width: 3vw;
+  height: 6vh;
+  z-index: 1000;
+  bottom: 12%;
+  left: 10%;
+}
+
+.profile-avatar-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: transform 0.2s ease;
+}
+
+.profile-avatar-img:hover {
+  transform: scale(1.05);
+}
+
+.dropdown-menu {
+  position: absolute;
+  left: 0;
+  bottom: 110%;
+  min-width: 120px;
+}
+
+.dropdown-item {
+  text-align: left;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #f5f5f5;
+}
+
+.dropdown-item:first-child {
+  border-radius: 4px 4px 0 0;
+}
+
+.dropdown-item:last-child {
+  border-radius: 0 0 4px 4px;
+}
