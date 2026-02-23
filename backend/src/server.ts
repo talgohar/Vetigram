@@ -40,7 +40,7 @@ const options = {
       version: "1.0.0",
       description: "REST server including authentication using JWT",
     },
-    servers: [{ url: `http://localhost:4000` },{ url: `http://10.10.246.141` }, { url: `https://10.10.246.141` }, { url: `https://node141.cs.colman.ac.il` }],
+    servers: [{ url: `http://localhost:27017` },{ url: `http://10.10.246.141` }, { url: `https://10.10.246.141` }, { url: `https://node141.cs.colman.ac.il` }],
     components: {
       securitySchemes: {
         bearerAuth: {

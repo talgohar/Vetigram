@@ -12,7 +12,7 @@ const base = `${process.env.DOMAIN_BASE}:${process.env.PORT}/`;
 // Storage configuration for public/posts
 const postStorage = multer.diskStorage({
   destination: function (req: Request, file, cb) {
-    const userId = req.params.userId;
+    const userId = (Array.isArray(req.params.userId) ? req.params.userId[0] : req.params.userId) as string;
 
     if (!userId) {
       return cb(new Error("Unauthorized"), "");

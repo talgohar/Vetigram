@@ -15,7 +15,7 @@ const register = async (req: Request, res: Response) => {
       email: req.body.email,
       username: req.body.username,
       password: hashedPassword,
-      isVet: req.body.isVet,
+      isVet: req.body.isDoctor || req.body.isVet,
     });
     res.status(200).send(user);
   } catch (err) {
@@ -63,13 +63,13 @@ const generateToken = (userId: string): tTokens | null => {
 const login = async (req: Request, res: Response) => {
   try {
     console.log("LOGIN BODY:", req.body);
-    const identifier = req.body.identifier?.trim();
+    const email = req.body.email?.trim() || req.body.identifier?.trim();
     const user = await userModel.findOne({
-      $or: [{ username: identifier }, { email: identifier }],
+      $or: [{ username: email }, { email: email }],
     });
 
-    if (!identifier) {
-      res.status(400).send("missing identifier");
+    if (!email) {
+      res.status(400).send("missing email");
       return;
     }
     if (!user) {

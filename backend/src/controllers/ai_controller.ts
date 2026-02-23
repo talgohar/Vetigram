@@ -11,12 +11,13 @@ interface PostAiDTO {
     owner?: IUser;
 }
 
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY
-});
+const openai = process.env.OPENAI_API_KEY && !process.env.OPENAI_API_KEY.startsWith('sk-placeholder')
+  ? new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY
+    })
+  : null;
 
-const processWithAI = async (): Promise<PostAiDTO[]> => {
-  const prompt = `Return a valid JSON array (no comments, no code blocks, no explanations) with exactly 1 sample post about health question from patient or an answer veterinarian. Use only one of these image names: xray.jpg, doctor.jpg, backmri.jpg, brokenleg.jpg. Example format:
+const processWithAI = async (): Promise<PostAiDTO[]> => { if (!openai) { return []; } const prompt = `Return a valid JSON array (no comments, no code blocks, no explanations) with exactly 1 sample post about health question from patient or an answer veterinarian. Use only one of these image names: xray.jpg, doctor.jpg, backmri.jpg, brokenleg.jpg. Example format:
 [
   {
     "title": "Example title",
@@ -74,3 +75,4 @@ export async function getAIProcessedContent(req: Request, res: Response) {
 }
 
 export default { getAIProcessedContent };
+

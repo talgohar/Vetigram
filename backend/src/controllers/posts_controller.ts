@@ -10,7 +10,8 @@ class PostsController extends BaseController<IPost> {
   }
 
   async create(req: Request, res: Response) {
-    const userId = req.params.userId;
+    let userId = req.params.userId;
+    if (Array.isArray(userId)) userId = userId[0];
     const post = {
       ...req.body,
       owner: new mongoose.Types.ObjectId(userId)
@@ -42,12 +43,14 @@ class PostsController extends BaseController<IPost> {
 
   async getLikeStatus(req: Request, res: Response) {
     try{
-      const userId = req.params.userId;
+      let userId = req.params.userId;
+      if (Array.isArray(userId)) userId = userId[0];
       if(!userId){
         res.status(400).json({ message: "No userId" });
         return;
       }
-      const postId = req.body.postId;
+      let postId = req.body.postId;
+      if (Array.isArray(postId)) postId = postId[0];
       if(!postId){
         res.status(400).json({ message: "No postId" });
         return;
@@ -68,12 +71,14 @@ class PostsController extends BaseController<IPost> {
 
   async toggleLike(req: Request, res: Response) {
     try {
-      const userId = req.params.userId;
+      let userId = req.params.userId;
+      if (Array.isArray(userId)) userId = userId[0];
       if(!userId){
         res.status(400).json({ message: "No userId" });
         return;
       }
-      const postId = req.body.postId;
+      let postId = req.body.postId;
+      if (Array.isArray(postId)) postId = postId[0];
       if(!postId){
         res.status(400).json({ message: "No postId" });
         return;
