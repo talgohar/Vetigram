@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { FaHeart, FaRegHeart, FaRegComment, FaUserMd, FaTrash, FaEdit } from "react-icons/fa";
 import useComments from "../hooks/useComments";
 import imageService from "../services/imageService";
 import useUser from "../hooks/useUser";
 import useLike from "../hooks/useLike";
-import CommentsDialog from "./CommentsDialog";
 import EditPostDialog from "./EditPostDialog";
 import postService from "../services/postService";
 import { User } from "../services/userService";
@@ -23,11 +23,11 @@ interface PostProps {
 }
 
 const Post: React.FC<PostProps> = ({ owner, userId, caption, postId, imageName, title, ableToDeletePost, deletePost, onPostEdited }) => {
-  const { comments, setComments } = useComments(postId);
+  const navigate = useNavigate();
+  const { comments } = useComments(postId);
   const { user } = useUser(userId);
   const [postImg, setPostImg] = useState("./images/default_post.png");
   const [profileImg, setProfileImg] = useState("./images/default_avatar.png");
-  const [showComments, setShowComments] = useState(false);
   const [showEditDialog, setShowEditDialog] = useState(false);
   const [postData, setPostData] = useState({ title: title || "", content: caption || "" });
   const { liked, likesCount, toggleLike } = useLike(postId, user?._id || "");
@@ -65,6 +65,19 @@ const Post: React.FC<PostProps> = ({ owner, userId, caption, postId, imageName, 
     } catch (error) {
       console.error("Error editing post:", error);
     }
+  };
+
+  const handleViewComments = () => {
+    navigate(`/post/${postId}/comments`, {
+      state: {
+        postId,
+        postImage: postImg,
+        postCaption: postData.content,
+        postTitle: postData.title,
+        ownerId: owner?._id || userId,
+        ownerUsername: owner?.username || "Unknown",
+      },
+    });
   };
 
   return (
@@ -116,7 +129,8 @@ const Post: React.FC<PostProps> = ({ owner, userId, caption, postId, imageName, 
               <FaRegHeart size={24} className="me-2 post-action-icon" onClick={toggleLike} />
             )}
             <span className="ms-1 me-3">{likesCount}</span>
-            <FaRegComment onClick={() => setShowComments(true)} size={24} className="me-2 post-action-icon" />
+            <FaRegComment onClick={handleViewComments} size={24} className="me-2 post-action-icon" />
+            <span className="ms-1">{comments.length}</span>
           </div>
         </div>
 
@@ -131,41 +145,17 @@ const Post: React.FC<PostProps> = ({ owner, userId, caption, postId, imageName, 
         <p className="mb-1">
           <strong>{owner?.username}</strong> {postData.content}
         </p>
-
-        {/* Display First 3 Comments (if any exist) */}
-        {comments.length > 0 && (
-          <div className="mt-2">
-            {comments.slice(0, 3).map((comment, index) => (
-              <p key={index} className="mb-1">
-                <strong>{comment.username}:</strong> {comment.comment}
-                {comment.isOwnerVet  && <FaUserMd className="ms-2" />} 
-              </p>
-            ))}
-          </div>
-        )}
       </div>
 
       {user && (
-        <CommentsDialog
-          username={owner && owner.username}
-          show={showComments}
-          comments={comments}
-          onClose={() => setShowComments(false)}
-          setComments={setComments}
-          user={user}
-          postImage={postImg}
-          caption={postData.content}
-          postId={postId}
+        <EditPostDialog
+          show={showEditDialog}
+          onClose={() => setShowEditDialog(false)}
+          onSubmit={handleEditSubmit}
+          initialValues={{ title: postData.title, content: postData.content, img: null }}
+          initialPreview={postImg}
         />
       )}
-
-      <EditPostDialog
-        show={showEditDialog}
-        onClose={() => setShowEditDialog(false)}
-        onSubmit={handleEditSubmit}
-        initialValues={{ title: postData.title, content: postData.content, img: null }}
-        initialPreview={postImg}
-      />
     </div>
   );
 };
