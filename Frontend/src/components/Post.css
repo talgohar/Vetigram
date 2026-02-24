@@ -1,5 +1,6 @@
 .post-card {
   max-width: 50vw;
+  margin: 0 auto 1rem auto;
 }
 
 .post-image {
@@ -15,3 +16,13 @@
 .post-delete-icon {
   cursor: pointer;
 }
+
+.post-edit-icon {
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.post-edit-icon:hover {
+  color: #0056b3 !important;
+}
+

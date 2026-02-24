@@ -1,4 +1,5 @@
 import React from "react";
+import "./LogoutConfirmationDialog.css";
 
 interface LogoutConfirmationDialogProps {
   show: boolean;
@@ -22,17 +23,17 @@ const LogoutConfirmationDialog: React.FC<LogoutConfirmationDialogProps> = ({
       >
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
-            <div className="modal-header">
+            <div className="modal-header logout-modal-header">
               <button
                 type="button"
                 className="btn-close"
                 onClick={onClose}
               ></button>
             </div>
-            <div className="modal-body">
+            <div className="modal-body logout-modal-body">
               <p>האם אתה בטוח שתרצה להתנתק</p>
             </div>
-            <div className="modal-footer">
+            <div className="modal-footer logout-modal-footer">
               <button
                 type="button"
                 className="btn btn-secondary"

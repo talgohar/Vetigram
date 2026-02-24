@@ -160,6 +160,56 @@ const deletePost = async (postId: string) => {
   return { posts: response.data, abort: () => abortController.abort() };
 }
 
+const editPost = async (postId: string, title: string, content: string, newImage: File | null) => {
+  const abortController = new AbortController();
+  try {
+    // First, update the post title and content
+    const response = await apiClient.put<PostModel>(
+      `/posts/${postId}`,
+      { title, content },
+      {
+        signal: abortController.signal,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    let updatedPost = response.data;
+
+    // If a new image is provided, upload it
+    if (newImage) {
+      const imageResponse = await apiClient.post<{ url: string }>(
+        "/files/posts",
+        (() => {
+          const formData = new FormData();
+          formData.append("file", newImage as Blob);
+          formData.append("postId", postId);
+          return formData;
+        })(),
+        {
+          signal: abortController.signal,
+        }
+      );
+
+      if (imageResponse.status === 200) {
+        const imageUrl = imageResponse.data.url;
+        const imageName = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
+        updatedPost.imageName = imageName;
+      }
+    }
+
+    return { post: updatedPost, abort: () => abortController.abort() };
+  } catch (error) {
+    if (error instanceof CanceledError) {
+      console.log("Request canceled");
+    } else {
+      console.error("Error editing post:", error);
+    }
+    return { post: null, abort: () => abortController.abort() };
+  }
+};
+
 const getAiPosts = () => {
   const abortController = new AbortController();
   const request = apiClient.get<PostModel[]>("/ai_data/ai-content", {
@@ -169,4 +219,4 @@ const getAiPosts = () => {
   return { request, abort: () => abortController.abort() };
 };
 
-export default { getAllPosts, addPost, getLikeStatus, deletePost, sendLikeRequest, getUserPosts, getAiPosts};
+export default { getAllPosts, addPost, getLikeStatus, deletePost, editPost, sendLikeRequest, getUserPosts, getAiPosts};

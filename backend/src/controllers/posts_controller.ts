@@ -130,6 +130,47 @@ class PostsController extends BaseController<IPost> {
       res.status(500).json({ message: "Internal server error" });
     }
   }
+
+  async updatePost(req: Request, res: Response) {
+    const userId = req.params.userId as string;
+    const postId = req.params.postId as string;
+    const { title, content } = req.body;
+    
+    if (!mongoose.Types.ObjectId.isValid(postId)) {
+      res.status(400).json({ message: "Invalid postId" });
+      return;
+    }
+
+    try {
+      // Check if the post exists and user is the owner
+      const post = await postModel.findById(postId);
+      if (!post) {
+        res.status(404).json({ message: "Post not found" });
+        return;
+      }
+
+      if (post.owner.toString() !== userId) {
+        res.status(403).json({ message: "Unauthorized: Only post owner can edit" });
+        return;
+      }
+
+      // Update post with new title and content
+      const updateData: any = {};
+      if (title) updateData.title = title;
+      if (content) updateData.content = content;
+
+      const updatedPost = await postModel.findByIdAndUpdate(
+        postId,
+        { $set: updateData },
+        { new: true }
+      ).populate('owner', 'username imageName isVet');
+
+      res.status(200).json(updatedPost);
+    } catch (error) {
+      console.error("Error updating post:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  }
 }
 
 export default new PostsController();

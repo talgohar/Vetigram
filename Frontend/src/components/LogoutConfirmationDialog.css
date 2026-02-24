@@ -1,0 +1,12 @@
+.logout-modal-header {
+  justify-content: flex-start;
+}
+
+.logout-modal-body {
+  text-align: right;
+  direction: rtl;
+}
+
+.logout-modal-footer {
+  justify-content: flex-start;
+}

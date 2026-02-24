@@ -136,6 +136,53 @@ router.get("/:id", postsController.getById.bind(postsController));
 
 /**
  * @swagger
+ * /posts/{id}:
+ *   put:
+ *     summary: Update a post by ID
+ *     description: Update post title and/or content (only post owner can update)
+ *     tags:
+ *       - Posts
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The ID of the post
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 description: The new title of the post
+ *               content:
+ *                 type: string
+ *                 description: The new content of the post
+ *     responses:
+ *       200:
+ *         description: Post updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Post'
+ *       403:
+ *         description: Unauthorized - only post owner can update
+ *       404:
+ *         description: Post not found
+ *       500:
+ *         description: Server error
+ */
+router.put("/:postId", authMiddleware, postsController.updatePost.bind(postsController));
+
+
+/**
+ * @swagger
  * posts/{id}:
  *   delete:
  *     summary: Delete a post by ID
