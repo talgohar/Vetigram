@@ -52,8 +52,13 @@ const Login: React.FC = () => {
   };
 
   const googleResponseMessage = async (response: CredentialResponse) => {
-    await googleSignIn(response);
-    nevigate("/");
+    const success = await googleSignIn(response);
+    if (success) {
+      nevigate("/");
+    } else {
+      alert("Google login failed");
+      setShow(true);
+    }
   };
 
   return (

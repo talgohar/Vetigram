@@ -61,11 +61,13 @@ const ImageDropdown: React.FC<ImageDropdownProps> = ({ userId, setRenderOnLogout
   };
 
   const handleLogoutConfirm = async () => {
-    if (user) {
-      await logout(user?.refreshToken[user.refreshToken.length - 1]);
-      setRenderOnLogout(true);
+    const storedRefreshToken = localStorage.getItem("refreshToken");
+    if (storedRefreshToken) {
+      await logout(storedRefreshToken);
     }
+    setRenderOnLogout(true);
     setShowLogoutDialog(false);
+    nevigate('/login');
   };
 
   return (

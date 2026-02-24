@@ -182,27 +182,24 @@ const googleSignin = async (req: Request, res: Response) => {
     const payload = ticket.getPayload();
     const email = payload?.email;
 
-
     if (!email) {
       res.status(400).send("missing email");
       return;
     }
 
-    const existingUser = await userModel.findOne({ email });
-    if (existingUser) {
-      res.status(400).send("User already exists");
-      return;
+    let user = await userModel.findOne({ email });
+    
+    // If user doesn't exist, create new account
+    if (!user) {
+      const username = email.split("@")[0].toLowerCase();
+      user = await userModel.create({
+        email,
+        username,
+        imageName: payload?.picture,
+        password: "google-signin",
+        isVet: false,
+      });
     }
-
-    const username = email.split("@")[0].toLowerCase();
-
-    const user = await userModel.create({
-      email,
-      username,
-      imgUrl: payload?.picture,
-      password: "google-signin",
-      isVet: false,
-    });
 
     const tokens = generateToken(user._id);
     if (!tokens) {
@@ -210,10 +207,16 @@ const googleSignin = async (req: Request, res: Response) => {
       return;
     }
 
-    res.status(200).send(tokens);
+    if (!user.refreshToken) {
+      user.refreshToken = [];
+    }
+    user.refreshToken.push(tokens.refreshToken);
+    await user.save();
+
+    res.status(200).json(tokens);
 
   } catch (err) {
-    res.status(400).send("google register failed");
+    res.status(400).send("google signin failed");
   }
 };
 
