@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { FaArrowLeft, FaUserMd } from "react-icons/fa";
+import { FaArrowLeft, FaUserMd, FaTrash } from "react-icons/fa";
 import { jwtDecode } from "jwt-decode";
 import useComments from "../hooks/useComments";
 import imageService from "../services/imageService";
@@ -61,9 +61,27 @@ const CommentsPage: React.FC = () => {
         isOwnerVet: currentUser.isVet || false,
         postId: state.postId,
       };
-      setComments([...comments, comment]);
-      await commentService.addComment(comment, currentUser._id || "");
-      setNewComment("");
+      const { success, createdComment } = await commentService.addComment(comment, currentUser._id || "");
+      if (success && createdComment) {
+        setComments([...comments, createdComment]);
+        setNewComment("");
+      } else {
+        alert("Failed to add comment");
+      }
+    }
+  };
+
+  const handleDeleteComment = async (commentId: string | undefined) => {
+    if (!commentId) return;
+
+    if (window.confirm("אתה בטוח שברצונך למחוק את התגובה הזו?")) {
+      const { success } = await commentService.deleteComment(commentId);
+      if (success) {
+        setComments(comments.filter((c) => c._id !== commentId));
+      } else {
+        alert("נכשל במחיקת התגובה");
+
+      }
     }
   };
 
@@ -124,8 +142,21 @@ const CommentsPage: React.FC = () => {
         <div className="comments-list">
           {comments.map((comment, index) => (
             <div key={index} className="comment-item">
-              <strong>{comment.username}:</strong> {comment.comment}
-              {comment.isOwnerVet && <FaUserMd className="ms-2" title="Veterinarian" />}
+              <div className="comment-header">
+                <div className="comment-content">
+                  <strong>{comment.username}:</strong> {comment.comment}
+                  {comment.isOwnerVet && <FaUserMd className="ms-2" title="Veterinarian" />}
+                </div>
+                {(comment.owner === currentUserId || currentUserId === state.ownerId) && (
+                  <button
+                    className="btn btn-sm btn-link text-danger delete-comment-btn"
+                    onClick={() => handleDeleteComment(comment._id)}
+                    title="Delete comment"
+                  >
+                    <FaTrash size={14} />
+                  </button>
+                )}
+              </div>
             </div>
           ))}
           {comments.length === 0 && (
