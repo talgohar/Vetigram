@@ -2,7 +2,8 @@ import express, {Request, Response, NextFunction} from "express";
 import path from "path";
 
 const secureStaticMiddleware = (req: Request, res: Response, next: NextFunction) => {
-  const userId = req.params.userid; // Get the logged-in user's ID
+  const userIdRaw = req.params.userid;
+const userId = Array.isArray(userIdRaw) ? userIdRaw[0] : userIdRaw; // Get the logged-in user's ID
 
   if (!userId) {
     res.status(403).json({ message: "Unauthorized access" });
