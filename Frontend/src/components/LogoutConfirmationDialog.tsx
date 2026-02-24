@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./LogoutConfirmationDialog.css";
 
 interface LogoutConfirmationDialogProps {
@@ -12,6 +12,17 @@ const LogoutConfirmationDialog: React.FC<LogoutConfirmationDialogProps> = ({
   onClose,
   onConfirm,
 }) => {
+  useEffect(() => {
+    if (show) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [show]);
+
   if (!show) return null;
 
   return (

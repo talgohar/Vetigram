@@ -105,6 +105,9 @@ const logout = async (refreshToken: string) => {
             localStorage.removeItem("refreshToken");
         } else {
             console.error("Failed to logout");
+            // Still clear tokens even if logout request failed
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("refreshToken");
         }
     } catch (error) {
         if (error instanceof CanceledError) {
@@ -112,8 +115,10 @@ const logout = async (refreshToken: string) => {
         } else {
             console.error("Error logging out:", error);
         }
+        // Always clear tokens from localStorage even if API call fails
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
     }
-
 }
 
 const addProfileImage = async (image: File) => {
