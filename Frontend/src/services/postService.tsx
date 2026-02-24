@@ -210,13 +210,4 @@ const editPost = async (postId: string, title: string, content: string, newImage
   }
 };
 
-const getAiPosts = () => {
-  const abortController = new AbortController();
-  const request = apiClient.get<PostModel[]>("/ai_data/ai-content", {
-    signal: abortController.signal,
-  });
-  // const request = {data:[]} as any;
-  return { request, abort: () => abortController.abort() };
-};
-
-export default { getAllPosts, addPost, getLikeStatus, deletePost, editPost, sendLikeRequest, getUserPosts, getAiPosts};
+export default { getAllPosts, addPost, getLikeStatus, deletePost, editPost, sendLikeRequest, getUserPosts};

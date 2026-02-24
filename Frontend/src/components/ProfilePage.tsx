@@ -97,6 +97,7 @@ const ProfilePage: React.FC = () => {
               postId={postItem._id}
               caption={postItem.content}
               imageName={postItem.imageName}
+              title={postItem.title}
               ableToDeletePost={true}
               deletePost={deletePost}
             />

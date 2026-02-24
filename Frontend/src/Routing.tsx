@@ -3,6 +3,7 @@ import Login from "./components/Login"
 import App from "./App"
 import Register from "./components/Register"
 import ProfilePage from "./components/ProfilePage"
+import CommentsPage from "./components/CommentsPage"
 
 const Routing: React.FC = () => {
     return(
@@ -12,6 +13,7 @@ const Routing: React.FC = () => {
                 <Route path="/" element={<App />} />
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/post/:postId/comments" element={<CommentsPage />} />
             </Routes>
         </BrowserRouter>
         
