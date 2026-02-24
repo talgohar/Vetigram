@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { SendPostDTO } from "../services/postService";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import aiService from "../services/aiService";
 
 interface AddPostDialogProps {
@@ -19,6 +19,17 @@ const AddPostDialog: React.FC<AddPostDialogProps> = ({
   const [content, setContent] = useState("");
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState("./images/upload_image_sample.png");
+
+  useEffect(() => {
+    if (show) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [show]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -69,6 +80,7 @@ const AddPostDialog: React.FC<AddPostDialogProps> = ({
     setContent("");
     setImage(null);
     setPreview("./images/upload_image_sample.png");
+    onClose();
   };
 
   const handleClose = () => {

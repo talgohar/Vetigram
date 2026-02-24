@@ -1,8 +1,18 @@
 import { Router } from 'express';
 import ai_controller from '../controllers/ai_controller';
 import { authMiddleware } from '../controllers/auth_controller';
+import rateLimit from 'express-rate-limit';
 
 const router = Router();
+
+// Rate limiter for AI suggestion endpoint - strict to control OpenAI API costs
+const aiSuggestionLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour
+  max: 30, // 30 requests per hour per IP
+  message: 'Too many AI suggestion requests. Please try again in an hour.',
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
 
 /**
@@ -108,6 +118,6 @@ router.get('/ai-content', ai_controller.getAIProcessedContent.bind(ai_controller
  *       500:
  *         description: AI processing error
  */
-router.post('/suggest-post-content', authMiddleware, ai_controller.suggestPostContent.bind(ai_controller));
+router.post('/suggest-post-content', aiSuggestionLimiter, authMiddleware, ai_controller.suggestPostContent.bind(ai_controller));
 
 export default router;

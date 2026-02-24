@@ -87,8 +87,8 @@ export async function suggestPostContent(req: Request, res: Response) {
     
     Return ONLY a valid JSON object (no comments, no code blocks, no explanations) with exactly these fields:
     {
-      "title": "Professional title for the post (4-10 words)",
-      "content": "Engaging clinical insight or educational content (2-4 sentences)"
+      "title": "Professional title for the post (2-5 words)",
+      "content": "Engaging clinical insight or educational content (1-2~ sentences)"
     }
     
     Make it informative for veterinary professionals while remaining accessible to the community.`;
