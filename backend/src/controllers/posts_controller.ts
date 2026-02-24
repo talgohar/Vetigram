@@ -54,7 +54,7 @@ class PostsController extends BaseController<IPost> {
       }
       let like = await likeModel.findOne({ userId, postId });
       if(like === null||like === undefined){
-        await likeModel.create({ userId, postId, like: false });
+        await likeModel.create({ userId, postId, isLiked: false });
         like = await likeModel.findOne({ userId, postId });
       }
       const likesCount = await likeModel.countDocuments({ postId, isLiked: true });
