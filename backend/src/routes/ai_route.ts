@@ -53,28 +53,6 @@ const aiSuggestionLimiter = rateLimit({
 
 /**
  * @swagger
- * /ai_data/ai-content:
- *   get:
- *     summary: Get smaple ai posts
- *     description: Get smaple ai posts
- *     tags:
- *       - Posts
- *     responses:
- *       200:
- *         description: A list of posts
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Post'
- *       500:
- *         description: Server error
- */
-router.get('/ai-content', ai_controller.getAIProcessedContent.bind(ai_controller));
-
-/**
- * @swagger
  * /ai_data/suggest-post-content:
  *   post:
  *     summary: Get AI suggestions for post title and content based on image
