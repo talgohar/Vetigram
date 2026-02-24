@@ -17,8 +17,8 @@ const port = process.env.PORT;
 
 
 const app = express();
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: '10mb' }));
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "*");
@@ -40,7 +40,7 @@ const options = {
       version: "1.0.0",
       description: "REST server including authentication using JWT",
     },
-    servers: [{ url: `http://localhost:3030` },{ url: `http://10.10.246.141` }, { url: `https://10.10.246.141` }, { url: `https://node141.cs.colman.ac.il` }],
+    servers: [{ url: `http://localhost:3000` }, { url: `http://localhost:27017` }, { url: `http://10.10.246.141` }, { url: `https://10.10.246.141` }, { url: `https://node141.cs.colman.ac.il` }],
     components: {
       securitySchemes: {
         bearerAuth: {

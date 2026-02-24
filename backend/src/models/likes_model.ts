@@ -22,5 +22,8 @@ const likeSchema = new mongoose.Schema<ILike>({
     },
 });
 
+// Ensure one like record per user per post
+likeSchema.index({ userId: 1, postId: 1 }, { unique: true });
+
 const likeModel = mongoose.model<ILike>("Likes", likeSchema);
 export default likeModel;
