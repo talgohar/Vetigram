@@ -5,6 +5,8 @@ import Dialog from "./Dialog";
 import { z } from "zod";
 import imageService from "../services/imageService";
 import { FaUserMd } from "react-icons/fa";
+import "./CommentsDialog.css";
+import "./CommentsDialog.css";
 
 interface CommentsDialogProps {
   show: boolean;
@@ -73,7 +75,7 @@ const CommentsDialog: React.FC<CommentsDialogProps> = ({
             <strong>{username}</strong> {caption}
           </p>
         </div>
-        <div className="mb-3" style={{ maxHeight: "300px", overflowY: "auto" }}>
+        <div className="mb-3 comments-list">
           {comments.map((comment, index) => (
             <div key={index} className="mb-2">
               <strong>{comment.username}:</strong> {comment.comment}

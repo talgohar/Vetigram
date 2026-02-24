@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./ImageDropdown.css";
 import LogoutConfirmationDialog from "./LogoutConfirmationDialog";
 import { logout } from "../services/authService";
 import useUser from "../hooks/useUser";
@@ -68,28 +69,18 @@ const ImageDropdown: React.FC<ImageDropdownProps> = ({ userId, setRenderOnLogout
   };
 
   return (
-    <div className="position-fixed d-inline-block" ref={menuRef} style={{
-      width: "3vw",
-      height: "6vh",
-      zIndex: 1000,
-      bottom: "10%",
-      left: "10%",
-      fontWeight: "bold",
-    }}>
+    <div className="position-fixed d-inline-block image-dropdown-container" ref={menuRef}>
       <img
         src={profileImage ?? "./images/default_avatar.png"}
         alt="Profile"
-        className="rounded-circle"
-        width="50"
-        height="50"
+        className="profile-avatar-img"
         onClick={toggleMenu}
-        style={{ cursor: "pointer" }}
       />
 
       {showMenu && (
-        <div className="dropup-menu dropup show position-absolute" style={{ left: 0, bottom: "100%" }}>
-          <button className="dropup-item" onClick={() => handleProfile()}>Profile</button>
-          <button className="dropup-item" onClick={() => handleLogout()}>Logout</button>
+        <div className="d-flex flex-column bg-white border rounded shadow dropdown-menu">
+          <button className="btn dropdown-item" onClick={() => handleProfile()}>Profile</button>
+          <button className="btn dropdown-item" onClick={() => handleLogout()}>Logout</button>
         </div>
       )}
 

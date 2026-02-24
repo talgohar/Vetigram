@@ -69,15 +69,15 @@ const register = async (user: SendUserDTO,  img: File | null) => {
             },
         });
         if (response.status === 200) {
-            await login(user.username || user.email, user.password);
-            if (img) {
+            const loginSuccess = await login(user.username || user.email, user.password);
+            if (loginSuccess && img) {
                 await addProfileImage(img);
             }
+            return true;
         } else {
             console.error("Failed to register");
+            return false;
         }
-        
-        return { abort: () => abortController.abort() };
 
     } catch (error) {
         if (error instanceof CanceledError) {
@@ -85,6 +85,7 @@ const register = async (user: SendUserDTO,  img: File | null) => {
         } else {
             console.error("Error register:", error);
         }
+        return false;
     }
 }
 
