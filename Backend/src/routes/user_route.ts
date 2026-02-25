@@ -105,9 +105,9 @@ router.post('/username', authMiddleware, usersController.getUsername.bind(usersC
 /**
  * @swagger
  * /users/update_user:
- *   get:
- *     summary: update user
- *     description: update user
+ *   post:
+ *     summary: Update user
+ *     description: Update user username
  *     tags:
  *       - Users
  *     security:
@@ -122,7 +122,7 @@ router.post('/username', authMiddleware, usersController.getUsername.bind(usersC
  *         example: "bobTheNotBuilder"
  *     responses:
  *       200:
- *         description: Returns true if the user is a veterinarian, false otherwise
+ *         description: Returns true if the user is updated
  *         content:
  *           application/json:
  *             schema:

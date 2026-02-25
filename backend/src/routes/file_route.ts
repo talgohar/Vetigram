@@ -21,7 +21,7 @@ const postStorage = multer.diskStorage({
     const userDir = path.join(__dirname, "../../public/posts", userId);
 
     if (!fs.existsSync(userDir)) {
-      console.log("creating directory");
+      console.log("creating directory for user:", userId);
       fs.mkdirSync(userDir, { recursive: true });
     }
 
@@ -29,7 +29,9 @@ const postStorage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     const ext = path.extname(file.originalname);
-    cb(null, `${Date.now()}${ext}`);
+    const filename = `${Date.now()}${ext}`;
+    console.log("saving file:", filename);
+    cb(null, filename);
   },
 });
 
@@ -105,7 +107,12 @@ const uploadProfile = multer({ storage: profileStorage });
  *       500:
  *         description: Internal server error
  */
-router.post("/posts", authMiddleware, uploadPost.single("file"), postsController.updatePostFile.bind(postsController));
+router.post("/posts", authMiddleware, uploadPost.single("file"), (req, res, next) => {
+  if (!req.file) {
+    return res.status(400).json({ message: "No file uploaded" });
+  }
+  next();
+}, postsController.updatePostFile.bind(postsController));
 
 
 /**
