@@ -8,7 +8,7 @@
     "dev": "cp .env_dev .env && nodemon --exec ts-node ./src/app.ts",
     "dev_win": "copy .env_dev .env && nodemon --exec ts-node ./src/app.ts",
     "prod": "cp .env_prod .env && tsc -p tsconfig_prod.json && pm2 start ecosystem.config.js --env production",
-    "prod1": "cp .env_prod .env && tsc -p tsconfig_prod.json && node ./dist/src/server.js"
+    "prod1": "cp .env_prod .env && tsc -p tsconfig_prod.json && node ./src/server.js"
   },
   "author": "",
   "license": "ISC",
