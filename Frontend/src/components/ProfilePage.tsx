@@ -109,7 +109,7 @@ const ProfilePage: React.FC = () => {
         show={showProfileDialog}
         onClose={() => setShowProfileDialog(false)}
         onSubmit={handleProfileSubmit}
-        initialPreview={profileImage ?? "./images/default_avatar.png"}
+        initialPreview={profileImage ?? "/images/default_avatar.png"}
         initialValues={{ username: user?.username || "", img: null as File | null }}
       />
     </div>
