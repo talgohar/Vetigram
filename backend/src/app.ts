@@ -2,8 +2,8 @@ import initApp from "./server";
 import https from 'https';
 import fs from 'fs';
 
-const port = process.env.PORT;
-const https_post = process.env.HTTPS_PORT;
+const port = Number(process.env.PORT) || 4000;
+const https_port = Number(process.env.HTTPS_PORT) || 4002;
 
 initApp().then((app) => {
   if (process.env.NODE_ENV !== 'production') {
@@ -17,7 +17,7 @@ initApp().then((app) => {
       key: fs.readFileSync('src/certs/client-key.pem'),
       cert: fs.readFileSync('src/certs/client-cert.pem')
     }
-    https.createServer(prop, app).listen(https_post);
+    https.createServer(prop, app).listen(https_port);
   }
 
 });
