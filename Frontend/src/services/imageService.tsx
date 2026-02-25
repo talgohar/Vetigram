@@ -29,10 +29,10 @@ const getProfileImage = async (profileImageName: string | undefined) => {
     if (response.status === 200 && response.config.url) {
       return baseImagesUrl + response.config.url;
     }
-    return "./images/default_avatar.png";
+    return "/images/default_avatar.png";
   } catch (error) {
     console.error("Error loading profile image:", error);
-    return "./images/default_avatar.png";
+    return "/images/default_avatar.png";
   }
 };
 

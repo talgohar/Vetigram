@@ -44,7 +44,7 @@ const CommentsPage: React.FC = () => {
 
   useEffect(() => {
     const fetchProfileImage = async () => {
-      if (currentUser && currentUser.imageName) {
+      if (currentUser) {
         const url = await imageService.getProfileImage(currentUser.imageName);
         setProfileImage(url);
       }
@@ -168,15 +168,13 @@ const CommentsPage: React.FC = () => {
         {currentUser && (
           <div className="add-comment-section">
             <div className="comment-input-wrapper">
-              {profileImage && (
-                <img
-                  src={profileImage}
-                  alt="Profile"
-                  className="rounded-circle me-2"
-                  width="40"
-                  height="40"
-                />
-              )}
+              <img
+                src={profileImage}
+                alt="Profile"
+                className="rounded-circle me-2"
+                width="40"
+                height="40"
+              />
               <input
                 type="text"
                 className="form-control comment-input"

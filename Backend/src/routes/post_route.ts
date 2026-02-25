@@ -233,13 +233,11 @@ router.delete("/:id", authMiddleware, postsController.deleteItem.bind(postsContr
  *               - postId
  *     responses:
  *       200:
- *         description: Post updated successfully
+ *         description: Like status retrieved
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Post'
- *       404:
- *         description: Post not found
+ *               type: boolean
  *       500:
  *         description: Server error
  */
@@ -249,7 +247,7 @@ router.post("/likes/status", authMiddleware, postsController.getLikeStatus.bind(
 /**
  * @swagger
  * /posts/likes/likeUpdate:
- *   put:
+ *   post:
  *     summary: Updates the like status of a post
  *     description: Updates the like status of a post
  *     tags:
@@ -270,11 +268,11 @@ router.post("/likes/status", authMiddleware, postsController.getLikeStatus.bind(
  *               - postId
  *     responses:
  *       200:
- *         description: Post updated successfully
+ *         description: Like status updated
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Post'
+ *               type: boolean
  *       404:
  *         description: Post not found
  *       500:

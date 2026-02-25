@@ -14,6 +14,7 @@ body, html {
   overflow: hidden;
 }
 
+
 .modal-open::before {
   content: "";
   position: fixed;
